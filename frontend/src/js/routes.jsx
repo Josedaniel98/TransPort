@@ -20,6 +20,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Grids from "./common/components/Examples/Grids";
 import Notificaciones from './common/components/Examples/Notificaciones';
 import ExampleTabs from './common/components/Examples/Tabs/Tabs';
+import Producto from './common/components/Productos/Producto';
+import {listSucursal,sucursal} from './common/components/Sucursales/index';
+
 require('../style/index.css');
 
 module.exports = (
@@ -30,6 +33,13 @@ module.exports = (
                 <Route exact path="/registro" component={Registro} />
                 <ProtectedRoute exact path="/" component={Demo} />
                 <ProtectedRoute exact path="/page2" component={Examples} />
+
+                <ProtectedRoute exact path="/producto" component={Producto} />
+                <ProtectedRoute exact path="/sucursal" component={listSucursal} />
+                <ProtectedRoute exact path="/sucursal/create" component={sucursal} />
+                <ProtectedRoute exact path="/sucursal/:id/editar" component={sucursal} />
+                <ProtectedRoute exact path="/sucursal/:id/ver" component={sucursal} />
+                
                 <ProtectedRoute exact path="/user-profile" component={Profile} />
                 <ProtectedRoute exact path="/grids" component={Grids} />
                 <ProtectedRoute exact path="/notifications" component={Notificaciones} />
