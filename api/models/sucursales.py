@@ -5,10 +5,9 @@ class Sucursal(models.Model):
     """Modelo de sucursales """
 
     nombre = models.CharField(max_length=255)
-    departamento = models.CharField(
-        choices=constantes_departamentos.DEPARTAMENTOS,
-        null=True,
-        max_length=20
+    departamento = models.PositiveSmallIntegerField(
+        choices=constantes_departamentos.DEPARTAMENTOS_NUM,
+        null=False,
     )
 
     PLANTAS_EXTRACCION = 10
@@ -21,7 +20,7 @@ class Sucursal(models.Model):
     TIPO_EMPRESA = (
         (PLANTAS_EXTRACCION, 'Plantas de extracción minera'),
         (PLANTAS_MATERIA_PRIMA, 'Plantas de proceso de materia prima'),
-        (VENTA_ALQUILER_MAQUINARIA, 'Venta y alguier de maquinaria de contrucción'),
+        (VENTA_ALQUILER_MAQUINARIA, 'Venta y alquiler de maquinaria de contrucción'),
         (TRANSPORTE_MATERIA_PRIMA, 'Transporte de materia prima'),
         (TRANSPORTE_PRODUCTOS, 'Transporte de productos para empresas extranjeras y nacionales'),
         (SERVICIOS_CONSTRUCCION, 'Servicios de contrucción en general') 

@@ -1,9 +1,18 @@
 from django.db import models
 from .sucursales import Sucursal
+# from .TipoProducto import TipoProducto
 
 
 class Producto(models.Model):
     """Modelo de productos """
+
+    PRODUCTO_PROCESADO = 1
+    MATERIA_PRIMA = 2
+
+    TIPO_PRODUCTO = (
+        (PRODUCTO_PROCESADO, 'Producto'),
+        (MATERIA_PRIMA, 'Materia Prima')
+    )
 
     nombre = models.CharField(max_length=255)
     descripcion = models.TextField()
@@ -18,6 +27,13 @@ class Producto(models.Model):
         null=True,
         blank=True
     )
+
+    tipo_producto = models.PositiveSmallIntegerField(
+        choices=TIPO_PRODUCTO,
+        default=1,
+        blank=False,
+        null=False
+        )
 
     materia_prima = models.BooleanField(default=False)
 

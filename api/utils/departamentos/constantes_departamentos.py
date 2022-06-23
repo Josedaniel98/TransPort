@@ -1,4 +1,29 @@
 
+DEPARTAMENTOS_NUM = (
+    (1, 'Alta Verapaz'),
+    (2, 'Baja Berapaz'),
+    (3, 'Chimaltenango'),
+    (4, 'Chiquimula'),
+    (5, 'El Progreso'),
+    (6, 'Escuintla'),
+    (7, 'Guatemala'),
+    (8, 'Huehuetenango'),
+    (9, 'Izabal'),
+    (10, 'Jalapa'),
+    (11, 'Jutiapa'),
+    (12, 'Petén'),
+    (13, 'Quetzaltenango'),
+    (14, 'Quiché'),
+    (15, 'Retalhuleu'),
+    (16, 'Sacatepéquez'),
+    (17, 'San Marcos'),
+    (18, 'Santa Rosa'),
+    (19, 'Sololá'),
+    (20, 'Suchitepéquez'),
+    (21, 'Totonicapán'),
+    (22, 'Zacapa')
+    )
+
 DEPARTAMENTOS = (
     ('01', 'Alta Verapaz'),
     ('02', 'Baja Berapaz'),
