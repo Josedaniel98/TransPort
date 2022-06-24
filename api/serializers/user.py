@@ -26,6 +26,7 @@ class ProfileReadSerializer(serializers.ModelSerializer):
             'activo',
             'creado',
             'modificado',
+            'sucursal'
         )
     
     def get_rol_name(self, obj):

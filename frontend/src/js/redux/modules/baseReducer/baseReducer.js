@@ -18,6 +18,7 @@ export const createReducer = (storeId, endpoint, formName=undefined, resourceLis
         ORDERING: `${storeId.toUpperCase()}_ORDERING`,
         SEARCH: `${storeId.toUpperCase()}_SEARCH`,
         SET_ROLES:'SET_ROLES',
+        SET_SUCURSALES: 'SET_SUCURSALES'
     };
 
     // -----------------------------------
@@ -153,6 +154,15 @@ export const createReducer = (storeId, endpoint, formName=undefined, resourceLis
             dispatch(setLoader(false))
         })
     }
+    const selectSucursal = () => (dispatch) =>{
+        dispatch(setLoader(true));
+        api.get('sucursal/selectsucursales').then((res)=>{
+            dispatch(setDataSelect(constants.SET_SUCURSALES, res))
+        }).catch(()=>{
+        }).finally(()=>{
+            dispatch(setLoader(false))
+        })
+    }
 
     const actions = {
         listar,
@@ -162,7 +172,8 @@ export const createReducer = (storeId, endpoint, formName=undefined, resourceLis
         eliminar,
         searchChange,
         onSortChange,
-        selectRoles
+        selectRoles,
+        selectSucursal
     };
 
     // -----------------------------------
@@ -212,6 +223,12 @@ export const createReducer = (storeId, endpoint, formName=undefined, resourceLis
                 roles: data.role,
             }
         },
+        [constants.SET_SUCURSALES]:(state,{ data })=>{
+            return{
+                ...state,
+                sucursales: data.sucursal,
+            }
+        },
     };
 
     const initialState = {
@@ -225,6 +242,7 @@ export const createReducer = (storeId, endpoint, formName=undefined, resourceLis
         ordering: '',
         search: '',
         roles: [],
+        sucursales: []
     };
 
     return { reducers, initialState, actions };

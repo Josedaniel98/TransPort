@@ -14,10 +14,11 @@ class Registro extends Component {
         editar: PropTypes.func.isRequired,
     };
     componentWillMount(){
-        const { selectRoles, leer} = this.props
+        const { selectRoles, selectSucursal} = this.props
         let idU=this.props.match.params.id;
 
         selectRoles();
+        selectSucursal();
 
         if(this.props.match.params.id != null && this.props.match.params.id > 0){
             this.props.leer(this.props.match.params.id)
@@ -42,7 +43,7 @@ class Registro extends Component {
     }
 
     render() {
-        const { loader, roles, empresas } = this.props;
+        const { loader, roles, sucursales } = this.props;
         return (
             <div className="Container">
             <div className="row">
@@ -52,7 +53,7 @@ class Registro extends Component {
                              <h3 className="t-primary text-uppercase">{this.state.titulo}</h3>
                              <div className="p-0 px-3 pt-3">
                              <LoadMask loading={loader} light>
-                    <UsuariosForm vendedores_form={false} onSubmit={this.onSubmit} format={this.format} roles={roles} />
+                    <UsuariosForm vendedores_form={false} onSubmit={this.onSubmit} format={this.format} roles={roles} sucursales={sucursales} />
                 </LoadMask>
                              </div>
                          </div>

@@ -7,7 +7,7 @@ import { Link, Redirect } from 'react-router-dom';
 
 class UsuariosForm extends React.Component {
     render(){
-        const { handleSubmit, format, roles, } = this.props;
+        const { handleSubmit, format, roles, sucursales} = this.props;
         return(
             <form name="loginForm" className="form-validate mb-lg" onSubmit={handleSubmit}>
                 <div className="row justify-content-center">
@@ -46,7 +46,7 @@ class UsuariosForm extends React.Component {
                         <Field name="profile.phone" label="phone" component={renderField} type="text" className="form-control" />
                     </div>
                 </div>
-                
+                    
                         <div className="row justify-content-start">
                             <div className="form-group has-feedback col-sm-6  col-12">
                                 <label className="t-azul" htmlFor="role">Role*</label>
@@ -57,8 +57,16 @@ class UsuariosForm extends React.Component {
                                     component={SelectField}
                                     />
                             </div>
-                        </div>
-                    
+                            <div className="form-group has-feedback col-sm-6  col-12">
+                                <label className="t-azul" htmlFor="role">Sucursal*</label>
+                                <Field
+                                    name="profile.sucursal"
+                                    label="sucursal"
+                                    options={format(sucursales)}
+                                    component={SelectField}
+                                    />
+                            </div>
+                        </div>           
                 
                 <div className="row  justify-content-sm-around justify-content-center">
                         <Link className="btn btn-secondary  m-1 align-self-center" to={"/usuarios"} >CANCELAR</Link>

@@ -10,7 +10,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.settings import api_settings
 
-from api.models import Profile
+from api.models import Profile, Sucursal
 from api.serializers import UserSerializer, UserReadSerializer
 
 
@@ -40,17 +40,24 @@ class UserViewset(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        profile = request.data.pop("profile")
+        try:
+            profile = request.data.pop("profile")
 
-        user = User.objects.create_user(
-            **request.data
-        )
-        
-        Profile.objects.create(
-            user=user,
-            role_id=profile.pop('role'),
-            **profile,
-        )
+            user = User.objects.create_user(
+                **request.data
+            )
+            sucursal_id = profile.pop('sucursal')
+            sucursal = Sucursal.objects.get(pk=sucursal_id)
+            Profile.objects.create(
+                user=user,
+                role_id=profile.pop('role'),
+                sucursal=sucursal,
+                **profile,
+            )
+        except:
+           user = User.objects.create_user(
+                **request.data
+            ) 
         user.save()
         serializer = UserReadSerializer(user)
         headers = self.get_success_headers(serializer.data)
