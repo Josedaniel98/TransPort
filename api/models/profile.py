@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from .roles import RolesModel
+from .sucursales import Sucursal
 
 class Profile(models.Model):
 
@@ -10,6 +11,21 @@ class Profile(models.Model):
     GENDERS = (
         (MALE, 'MALE'),
         (FEMALE, 'FEMALE')
+    )
+
+    role = models.ForeignKey(
+        RolesModel,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="role"
+    )
+
+    sucursal = models.ForeignKey(
+        Sucursal,
+        on_delete=models.deletion.CASCADE,
+        related_name="sucursales",
+        null=True,
+        blank=True
     )
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")

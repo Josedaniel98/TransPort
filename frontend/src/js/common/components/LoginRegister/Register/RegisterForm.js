@@ -29,16 +29,6 @@ const RegisterForm = (props) => {
                     className="form-control"
                 />
             </div>
-            <div className="form-group has-feedback">
-                <label htmlFor="confirmPassword">Confirmar Contraseña</label>
-                <Field
-                    name="confirmPassword"
-                    label="Confirmar Contraseña"
-                    component={renderField}
-                    type="password"
-                    className="form-control"
-                />
-            </div>
             <div className="buttons-box">
                 <button type="submit" className="btn btn-primary m-1 align-self-center">Registrarse</button>
             </div>
@@ -46,18 +36,11 @@ const RegisterForm = (props) => {
     );
 };
 
-export const matchPassword = (pass, confirm) => validatorFromFunction(value => {
-    return pass === confirm;
-});
 
 export default reduxForm({
     form: 'register', // a unique identifier for this form
     validate: (data) => {
         return validate(data, {
-            confirmPassword: combine(
-               validators.exists()('Este campo es requerido'),
-               matchPassword(data.password, data.confirmPassword)()('Las contraseñas no coinciden')
-            ),
             username: validators.exists()('Este campo es requerido'),
             first_name: validators.exists()('Este campo es requerido'),
             last_name: validators.exists()('Este campo es requerido'),

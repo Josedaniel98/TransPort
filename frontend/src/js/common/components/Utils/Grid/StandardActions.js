@@ -53,3 +53,6 @@ export function standardActions(acciones) {
         return ( <Acciones id={cell} {...acciones}/> )
     };
 }
+export function customStandardActions(cell, acciones) {
+    return <Acciones id={cell} {...acciones} />;
+}

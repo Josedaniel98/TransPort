@@ -1,5 +1,4 @@
 from django.db import models
-from .empresas import Empresas
 from api.utils.departamentos import constantes_departamentos
 
 class Sucursal(models.Model):

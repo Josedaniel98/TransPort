@@ -1,1 +1,2 @@
-from .user import UserSerializer, UserReadSerializer
+from .user import *
+from .role import *

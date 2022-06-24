@@ -1,6 +1,5 @@
 from django.db import models
-from .sucursal import Sucursal
-from .TipoProducto import TipoProducto
+from .sucursales import Sucursal
 
 
 class Producto(models.Model):
@@ -18,12 +17,6 @@ class Producto(models.Model):
         related_name="productos",
         null=True,
         blank=True
-    )
-
-    tipo_producto = models.ForeignKey(
-        TipoProducto,
-        on_delete=models.deletion.CASCADE,
-        related_name="productos"
     )
 
     materia_prima = models.BooleanField(default=False)

@@ -40,12 +40,25 @@ class UserViewset(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
-        usuario = User.objects.get(username=request.data["username"])
-        usuario.set_password(request.data["password"])
-        usuario.save()
+        profile = request.data.pop("profile")
+
+        user = User.objects.create_user(
+            **request.data
+        )
+        
+        Profile.objects.create(
+            user=user,
+            role_id=profile.pop('role'),
+            **profile,
+        )
+        user.save()
+        serializer = UserReadSerializer(user)
         headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        return Response(
+            serializer.data,
+            status=status.HTTP_201_CREATED,
+            headers=headers
+        )
 
     def perform_create(self, serializer):
         serializer.save()

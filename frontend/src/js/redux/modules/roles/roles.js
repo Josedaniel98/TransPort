@@ -7,10 +7,10 @@ import {createReducer} from "../baseReducer/baseReducer";
 // ------------------------------------
 
 export const { reducers, initialState, actions } = createReducer(
-    "usuarios",
-    "user",
-    "EditarUsuarioForm",
-    "/usuarios",
+    "roles",
+    "role",
+    "RolesForm",
+    "/roles",
 );
 
 export default handleActions(reducers, initialState);

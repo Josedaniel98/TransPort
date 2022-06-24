@@ -17,6 +17,7 @@ export const createReducer = (storeId, endpoint, formName=undefined, resourceLis
         PAGE: `${storeId.toUpperCase()}_PAGE`,
         ORDERING: `${storeId.toUpperCase()}_ORDERING`,
         SEARCH: `${storeId.toUpperCase()}_SEARCH`,
+        SET_ROLES:'SET_ROLES',
     };
 
     // -----------------------------------
@@ -51,6 +52,12 @@ export const createReducer = (storeId, endpoint, formName=undefined, resourceLis
     const setSearch = search => ({
         type: constants.SEARCH,
         search,
+    });
+
+
+    const setDataSelect = (type, data) =>({
+        type,
+        data
     });
 
     // -----------------------------------
@@ -137,6 +144,16 @@ export const createReducer = (storeId, endpoint, formName=undefined, resourceLis
         dispatch(listar());
     };
 
+    const selectRoles = () => (dispatch) =>{
+        dispatch(setLoader(true));
+        api.get('role/selectroles').then((res)=>{
+            dispatch(setDataSelect(constants.SET_ROLES, res))
+        }).catch(()=>{
+        }).finally(()=>{
+            dispatch(setLoader(false))
+        })
+    }
+
     const actions = {
         listar,
         leer,
@@ -145,6 +162,7 @@ export const createReducer = (storeId, endpoint, formName=undefined, resourceLis
         eliminar,
         searchChange,
         onSortChange,
+        selectRoles
     };
 
     // -----------------------------------
@@ -188,6 +206,12 @@ export const createReducer = (storeId, endpoint, formName=undefined, resourceLis
                 search,
             };
         },
+        [constants.SET_ROLES]:(state,{ data })=>{
+            return{
+                ...state,
+                roles: data.role,
+            }
+        },
     };
 
     const initialState = {
@@ -200,6 +224,7 @@ export const createReducer = (storeId, endpoint, formName=undefined, resourceLis
         page: 1,
         ordering: '',
         search: '',
+        roles: [],
     };
 
     return { reducers, initialState, actions };

@@ -1,5 +1,5 @@
 from django.db import models
-from .empresas import Empresas
+from .sucursales import Sucursal
 
 class Producto(models.Model):
     """Modelo de productos """
@@ -9,8 +9,8 @@ class Producto(models.Model):
 
     precio_venta = models.FloatField(null=False, default=0)
 
-    empresa = models.ForeignKey(
-        Empresas,
+    Sucursal = models.ForeignKey(
+        Sucursal,
         on_delete=models.deletion.CASCADE,
         related_name="productos",
         null=True,
@@ -22,14 +22,14 @@ class Producto(models.Model):
     estado = models.BooleanField(default=True)
 
     def __str__(self):
-        """ retorna datos del producto"""
-        nombre_empresa = ""
-        if self.empresa:
-            self.empresa.nombre
-        return "id: {} nombre: {} empresa: {}".format(
+        """ retorna datos del servicio"""
+        nombre_sucursal = ""
+        if self.sucursal:
+            self.sucursal.nombre
+        return "id: {} nombre: {} sucursal: {}".format(
             self.pk,
             self.nombre,
-            nombre_empresa
+            nombre_sucursal
         )
 
     def delete(self):

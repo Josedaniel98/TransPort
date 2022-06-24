@@ -22,6 +22,17 @@ import Notificaciones from './common/components/Examples/Notificaciones';
 import ExampleTabs from './common/components/Examples/Tabs/Tabs';
 require('../style/index.css');
 
+
+import {
+    Listar as RolesGrid,
+    Nuevo as RolesCrear
+} from '../js/common/components/app/roles';
+
+import {
+    Listar as UsuarioGrid,
+    Editar as UsuarioEditar
+} from '../js/common/components/app/Users';
+
 module.exports = (
     <div>
         <div className="container__content">
@@ -34,6 +45,18 @@ module.exports = (
                 <ProtectedRoute exact path="/grids" component={Grids} />
                 <ProtectedRoute exact path="/notifications" component={Notificaciones} />
                 <ProtectedRoute exact path="/tabs" component={ExampleTabs} />
+                
+                {/*Roles */}
+                <ProtectedRoute exact path="/roles" component={RolesGrid} />
+                <ProtectedRoute exact path="/role/nuevo" component={RolesCrear} />
+                <ProtectedRoute exact path="/role/:id/editar" component={RolesCrear} />
+
+                {/* Usuarios */}
+                <ProtectedRoute exact path="/usuarios" component={UsuarioGrid} title="Usuarios"/>
+                <ProtectedRoute exact path="/usuario/nuevo" component={UsuarioEditar} title="Usuarios/Agregar usuario" />
+                <ProtectedRoute exact path="/user-profile" component={Profile} title="Perfil" />
+                <ProtectedRoute exact path="/usuario/:id/editar" component={UsuarioEditar} title="Usuarios/Editar usuario"/>
+
                 <Route component={NotFound} />
             </Switch>
         </div>
