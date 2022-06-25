@@ -15,7 +15,7 @@ class Producto(models.Model):
     )
 
     nombre = models.CharField(max_length=255)
-    descripcion = models.TextField()
+    descripcion = models.TextField(null=True, blank=True)
     codigo = models.CharField(max_length=50)
 
     precio_venta = models.FloatField(null=False, default=0)

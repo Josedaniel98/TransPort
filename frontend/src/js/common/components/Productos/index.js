@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { actions } from '../../../redux/modules/producto/producto';
 import Producto from './Producto';
+import ListProducto from './ListProducto';
 
 
 const ms2p = (state) => {
@@ -11,4 +12,5 @@ const ms2p = (state) => {
 
 const md2p = { ...actions };
 
-export default connect(ms2p, md2p)(Producto);
+export const producto = connect(ms2p, md2p)(Producto);
+export const listProducto = connect(ms2p, md2p)(ListProducto);

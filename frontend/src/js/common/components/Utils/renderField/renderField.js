@@ -243,9 +243,10 @@ export const AsyncSelectField = (
         isSearchable,
         loadOptions,
         placeholder,
-        meta: { touched, error }
-    }) => {
-
+        meta: { touched, error },
+        className,
+    }
+) => {
     const invalid = touched && error;
 
     return (
@@ -253,13 +254,13 @@ export const AsyncSelectField = (
             <Async
                 isClearable={isClearable}
                 cacheOptions
-                className={classNames('react-select-container', { 'is-invalid': invalid })}
+                className={classNames(className || 'react-select-container', { 'is-invalid': invalid })}
                 backspaceRemovesValue={false}
                 isSearchable={isSearchable}
                 defaultOptions
                 loadOptions={loadOptions}
                 placeholder={placeholder}
-                onChange={(e) => { input.onChange(e ? e : null); }}
+                onChange={(e) => { input.onChange(e || null); }}
                 value={input.value}
                 isDisabled={disabled}
             />
@@ -269,8 +270,9 @@ export const AsyncSelectField = (
                 </div>
             )}
         </React.Fragment>
-    )
+    );
 };
+
 
 export const CreatableSelectField = (
     {

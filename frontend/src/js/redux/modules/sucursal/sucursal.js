@@ -88,7 +88,7 @@ const update = (data) => (dispatch, getStore) => {
 };
 
 const eliminar = id => (dispatch) => {
-    console.log(id)
+    
     api.eliminar(`sucursal/${id}`).then(() => {
         NotificationManager.success('Sucursal eliminado correctamente', 'Éxito', 1000);
         dispatch(getList());

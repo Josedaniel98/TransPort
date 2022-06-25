@@ -19,10 +19,15 @@ class Navbar extends Component {
 
         return (
             <nav className="align-items-stretch flex-md-nowrap p-0 navbar navbar-light">
-                <h5>{user.profile.rol_name}</h5>
+                <h5>{user.profile && user.profile.rol_name ? user.profile.rol_name : "" }</h5>
                 {
-                    user.profile.sucursal.departamento &&
+                    (
+                    user.profile &&
+                    user.profile.sucursal && 
+                    user.profile.sucursal.departamento)
+                    ?
                     <h5>{user.profile.sucursal.departamento}</h5>
+                    : ""
                 }
                 <div className="main-navbar__search w-50 d-none d-md-flex d-lg-flex">
                     <div className="ml-3 input-group input-group-seamless" />
@@ -32,8 +37,8 @@ class Navbar extends Component {
                     <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                         <DropdownToggle color="light" caret className="nav-item-dropdown border-0">
                             <img className="user-avatar rounded-circle mr-3"
-                                 src={(user.profile && user.profile.avatar) ? user.profile.avatar : defaultAvatar}
-                                 alt="User Avatar" />
+                                src={(user.profile && user.profile.avatar) ? user.profile.avatar : defaultAvatar}
+                                alt="User Avatar" />
                             <span className="d-none d-md-inline-block">{user.first_name}</span>
                         </DropdownToggle>
                         <DropdownMenu>

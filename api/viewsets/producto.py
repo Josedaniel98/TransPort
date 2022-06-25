@@ -1,15 +1,27 @@
 ''' Producto ViewSet '''
 
-from yaml import serialize_all
 from rest_framework import viewsets
+from rest_framework.decorators import action
 
 # Models
 from api.models import Producto
 
 # Serializers
-from api.serializers import ProductoSerializer
+from api.serializers import ProductoSerializer, ProductoReadSerializer
 
 
 class ProductoViewSet(viewsets.ModelViewSet):
-    queryset = Producto.objects.all()
-    serializer_class = ProductoSerializer
+    queryset = Producto.objects.filter(estado=True)
+    # serializer_class = ProductoSerializer
+
+    def get_serializer_class(self):
+
+        if self.action == 'list':
+            return ProductoReadSerializer
+        
+        return ProductoSerializer
+    
+    def perform_destroy(self, sucursal ):
+        """ Desactivate a sucursal when it is deleted """
+        sucursal.estado=False
+        sucursal.save()
