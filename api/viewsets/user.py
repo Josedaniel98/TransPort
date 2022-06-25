@@ -11,7 +11,7 @@ from rest_framework.response import Response
 from rest_framework.settings import api_settings
 
 from api.models import Profile, Sucursal
-from api.serializers import UserSerializer, UserReadSerializer
+from api.serializers import UserSerializer, UserReadSerializer, ProfileSerializer, UserMeReadSerializer
 
 
 class UserViewset(viewsets.ModelViewSet):
@@ -76,44 +76,54 @@ class UserViewset(viewsets.ModelViewSet):
         except (TypeError, KeyError):
             return {}
 
-    @action(methods=["put"], detail=False)
-    def update_me(self, request, *args, **kwargs):
-        data = request.data
-        try:
-            avatar = data.get("avatar")
-            data = json.loads(data["data"])
-            user = request.user
-            if user.username != data["username"]:
-                try:
-                    User.objects.get(username=data["username"])
-                    return Response(
-                        {"detail": "the chosen username in not available, please pick another"},
-                        status=status.HTTP_400_BAD_REQUEST
-                    )
-                except User.DoesNotExist:
-                    pass
-            user.username = data["username"]
-            user.first_name = data["first_name"]
-            user.last_name = data["last_name"]
-            perfil, created = Profile.objects.get_or_create(user=user)
-            if avatar is not None:
-                perfil.avatar = File(avatar)
-            profile = data.get("profile")
-            if profile is not None:
-                perfil.phone = profile.get("phone", perfil.phone)
-                perfil.address = profile.get("address", perfil.address)
-                perfil.gender = profile.get("gender", perfil.gender)
+    def update(self, request, *args, **kwargs):
+        profile_data = request.data.pop("profile")
+        user_data = request.data
+
+        usuario = self.get_object()
+        serializer = UserSerializer(usuario, data=user_data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+
+        if "password" in user_data:
+            user.set_password(user_data["password"])
             user.save()
+
+        # si el usuario no tiene perfil lo crea
+        try:
+            perfil = user.profile
+            profile_data.pop("user")
+            avatar = profile_data.get("avatar", None)
+            if avatar is not None:
+                profile_data.pop("avatar")
+
+            serializerP = ProfileSerializer(
+                perfil,
+                data=profile_data,
+                partial=True
+            )
+
+            serializerP.is_valid(raise_exception=True)
+            perfil.role_id = profile_data["role"]
+            perfil.phone = profile_data["phone"]
+            perfil.sucursal_id = profile_data["sucursal"]
             perfil.save()
-            serializer = UserReadSerializer(user)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        except KeyError as e:
-            return Response({"detail": "{} is a required field".format(str(e))}, status=status.HTTP_400_BAD_REQUEST)
+        except Profile.DoesNotExist:
+            Profile.objects.create(
+                user=user,
+                role_id=profile_data.get("role", None),
+                phone=profile_data.get("phone", None),
+                sucursal_id=profile_data["sucursal"]
+            )
+
+        serializerUsuario = UserReadSerializer(user)
+
+        return Response(serializerUsuario.data, status=status.HTTP_200_OK)
 
     @action(methods=["get"], detail=False)
     def me(self, request, *args, **kwargs):
         user = request.user
-        serializer = UserReadSerializer(user)
+        serializer = UserMeReadSerializer(user)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     @action(methods=["post"], detail=False)

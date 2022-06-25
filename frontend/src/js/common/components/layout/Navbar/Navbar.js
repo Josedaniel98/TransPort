@@ -19,9 +19,15 @@ class Navbar extends Component {
 
         return (
             <nav className="align-items-stretch flex-md-nowrap p-0 navbar navbar-light">
-                <div className="main-navbar__search w-100 d-none d-md-flex d-lg-flex">
+                <h5>{user.profile.rol_name}</h5>
+                {
+                    user.profile.sucursal.departamento &&
+                    <h5>{user.profile.sucursal.departamento}</h5>
+                }
+                <div className="main-navbar__search w-50 d-none d-md-flex d-lg-flex">
                     <div className="ml-3 input-group input-group-seamless" />
                 </div>
+                
                 <ul className="border-left flex-row navbar-nav">
                     <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                         <DropdownToggle color="light" caret className="nav-item-dropdown border-0">
