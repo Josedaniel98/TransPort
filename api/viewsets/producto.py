@@ -7,7 +7,7 @@ from rest_framework.decorators import action
 from api.models import Producto
 
 # Serializers
-from api.serializers import ProductoSerializer, ProductoReadSerializer
+from api.serializers import ProductoSerializer, ProductoReadSerializer, ProductoRetrieveSerializar
 
 
 class ProductoViewSet(viewsets.ModelViewSet):
@@ -18,6 +18,8 @@ class ProductoViewSet(viewsets.ModelViewSet):
 
         if self.action == 'list':
             return ProductoReadSerializer
+        elif self.action=='retrieve':
+            return ProductoRetrieveSerializar
         
         return ProductoSerializer
     

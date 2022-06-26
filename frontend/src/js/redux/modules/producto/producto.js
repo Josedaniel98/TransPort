@@ -1,6 +1,7 @@
 import { handleActions } from 'redux-actions';
 import { push } from "react-router-redux";
 import { NotificationManager } from "react-notifications";
+import { initialize as initializeForm } from 'redux-form';
 import { api } from "api";
 
 const SUBMIT = 'PRODUCTO_SUBMIT';
@@ -65,6 +66,18 @@ const getList = (page = 1) => (dispatch) => {
     });
 };
 
+const detail = id => (dispatch) => {
+    dispatch(setLoader(true));
+
+    api.get(`producto/${id}`).then((response) => {
+        dispatch(initializeForm('productoForm', response));
+    }).catch((error) => {
+        NotificationManager.error(error.detail, 'ERROR', 0);
+    }).finally(() => {
+        dispatch(setLoader(false));
+    });
+};
+
 const eliminar = id => (dispatch) => {
     
     api.eliminar(`producto/${id}`).then(() => {
@@ -72,6 +85,21 @@ const eliminar = id => (dispatch) => {
         dispatch(getList());
     }).catch(() => {
         NotificationManager.error('Hubo error en la eliminación', 'ERROR', 0);
+    });
+};
+
+const update = (data) => (dispatch, getStore) => {
+    const { values } = getStore().form.productoForm;
+    const newData = {
+        ...data,
+        sucursal: data.sucursal.value
+    }
+
+    api.put(`producto/${values.id}`, newData).then(() => {
+        NotificationManager.success('El producto se actualizó correctamente', 'Éxito', 1000);
+        dispatch(push('/producto'));
+    }).catch(() => {
+        NotificationManager.error('Hubo error en la actualización', 'ERROR', 0);
     });
 };
 
@@ -94,7 +122,9 @@ export const actions = {
     onSubmit,
     getListSucursal,
     getList,
-    eliminar
+    eliminar,
+    detail,
+    update
 };
 
 export const reducers = {
@@ -121,7 +151,7 @@ export const reducers = {
 export const initialState = {
     loader: false,
     page: 1,
-    data: []
+    data: {}
 };
 
 export default handleActions(reducers, initialState);

@@ -15,11 +15,11 @@ import {
 
 
 export const ProductoForm = (props) => {
-    const { handleSubmit, getListSucursal } = props
+    const { handleSubmit, getListSucursal, ver } = props
 
     const TIPO_PRODUCTO = [
-        {"value":1, "label":'Producto'},
-        {"value":2, "label":'Materia Prima'},
+        { "value": 1, "label": 'Producto' },
+        { "value": 2, "label": 'Materia Prima' },
     ]
 
     return (
@@ -33,6 +33,7 @@ export const ProductoForm = (props) => {
                             name="nombre"
                             placeholder="Nombre del item"
                             component={renderField}
+                            disable={ver}
                         />
                     </div>
                     <div className="col-md-6 col-12 mb-2">
@@ -41,6 +42,7 @@ export const ProductoForm = (props) => {
                             name="codigo"
                             placeholder="Código del elemento"
                             component={renderField}
+                            disable={ver}
                         />
                     </div>
                     <div className="col-md-6 col-12 mb-2">
@@ -49,17 +51,19 @@ export const ProductoForm = (props) => {
                             name="precio_venta"
                             placeholder="Precio del item"
                             component={renderCurrency}
+                            disable={ver}
                         />
                     </div>
                     <div className="col-md-6 col-12 mb-2">
                         <label htmlFor="normal_field">Tipo de Producto</label>
                         <Field
-                            name="departamento"
+                            name="tipo_producto"
                             options={TIPO_PRODUCTO}
                             component={SelectField}
+                            disable={ver}
                         />
                     </div>
-                    
+
                     <div className="col-md-6 col-12 mb-2">
                         <label htmlFor="sucursal">Sucursal</label>
                         <Field
@@ -68,6 +72,7 @@ export const ProductoForm = (props) => {
                             placeholder="Seleccionar..."
                             loadOptions={getListSucursal}
                             component={AsyncSelectField}
+                            disable={ver}
                         />
                     </div>
                     <div className="col-md-6 col-12 mb-2">
@@ -76,14 +81,29 @@ export const ProductoForm = (props) => {
                             name="descripcion"
                             placeholder="Observaciones"
                             component={renderTextArea}
+                            disable={ver}
                         />
                     </div>
                 </div>
             </div>
-            <div className='d-flex'>
-                <div className="col-md-6 col-12 mb-2 d-flex justify-content-end">
-                    <button type="submit" className="btn btn-primary m-1 align-self-center">Registrar</button>
+            <div className='row mt-2'>
+
+                <div className="col-md-6 col-12 mb-2">
+                    <a
+                        className="ml-3 btn btn-danger mr-1"
+                        href="/#/producto"
+                    >
+                        Cancelar
+                    </a>
                 </div>
+                {
+                    !ver
+                    &&
+                    (<div className="col-md-6 col-12 mb-2">
+                        <button type="submit" className="btn btn-primary m-1 align-self-center">Registrar</button>
+                    </div>)
+                }
+
             </div>
 
         </form>
@@ -91,7 +111,7 @@ export const ProductoForm = (props) => {
 }
 
 export default reduxForm({
-    form: 'producto',
+    form: 'productoForm',
     validate: (data) => {
         return validate(data, {
             nombre: validators.exists()('Este campo es requerido'),

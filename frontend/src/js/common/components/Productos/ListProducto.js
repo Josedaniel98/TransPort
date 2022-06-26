@@ -38,7 +38,7 @@ export default class ListProducto extends Component {
                                 dataField="id"
                                 dataAlign="center"
                                 dataSort
-                                dataFormat={standardActions({ editar: "producto", eliminar })}
+                                dataFormat={standardActions({ editar: "producto", ver:'producto', eliminar })}
                             >
                                 Acciones
                             </TableHeaderColumn>
@@ -59,9 +59,6 @@ export default class ListProducto extends Component {
                             <TableHeaderColumn
                                 dataField="precio_venta"
                                 dataSort
-                            /*  dataFormat={(cell) => {
-                                return cell.label
-                            }} */
                             >
                                 Precio
                             </TableHeaderColumn>
@@ -70,6 +67,12 @@ export default class ListProducto extends Component {
                                 dataSort
                             >
                                 Tipo de producto
+                            </TableHeaderColumn>
+                            <TableHeaderColumn
+                                dataField="sucursal"
+                                dataSort
+                            >
+                                Sucursal
                             </TableHeaderColumn>
 
                         </Grid>
