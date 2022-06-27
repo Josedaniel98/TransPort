@@ -1,5 +1,6 @@
 from django.db import models
 from api.utils.departamentos import constantes_departamentos
+from api.utils.tipoempresa.constante_empresa import TIPO_EMPRESA
 
 class Sucursal(models.Model):
     """Modelo de sucursales """
@@ -10,21 +11,21 @@ class Sucursal(models.Model):
         null=False,
     )
 
-    PLANTAS_EXTRACCION = 10
-    PLANTAS_MATERIA_PRIMA = 20
-    VENTA_ALQUILER_MAQUINARIA = 30
-    TRANSPORTE_MATERIA_PRIMA = 40
-    TRANSPORTE_PRODUCTOS = 50
-    SERVICIOS_CONSTRUCCION=60  
+    # PLANTAS_EXTRACCION = 10
+    # PLANTAS_MATERIA_PRIMA = 20
+    # VENTA_ALQUILER_MAQUINARIA = 30
+    # TRANSPORTE_MATERIA_PRIMA = 40
+    # TRANSPORTE_PRODUCTOS = 50
+    # SERVICIOS_CONSTRUCCION=60  
 
-    TIPO_EMPRESA = (
-        (PLANTAS_EXTRACCION, 'Plantas de extracción minera'),
-        (PLANTAS_MATERIA_PRIMA, 'Plantas de proceso de materia prima'),
-        (VENTA_ALQUILER_MAQUINARIA, 'Venta y alquiler de maquinaria de contrucción'),
-        (TRANSPORTE_MATERIA_PRIMA, 'Transporte de materia prima'),
-        (TRANSPORTE_PRODUCTOS, 'Transporte de productos para empresas extranjeras y nacionales'),
-        (SERVICIOS_CONSTRUCCION, 'Servicios de contrucción en general') 
-    )
+    # TIPO_EMPRESA = (
+    #     (PLANTAS_EXTRACCION, 'Plantas de extracción minera'),
+    #     (PLANTAS_MATERIA_PRIMA, 'Plantas de proceso de materia prima'),
+    #     (VENTA_ALQUILER_MAQUINARIA, 'Venta y alquiler de maquinaria de contrucción'),
+    #     (TRANSPORTE_MATERIA_PRIMA, 'Transporte de materia prima'),
+    #     (TRANSPORTE_PRODUCTOS, 'Transporte de productos para empresas extranjeras y nacionales'),
+    #     (SERVICIOS_CONSTRUCCION, 'Servicios de contrucción en general') 
+    # )
     tipo_empresa = models.IntegerField(
         choices=TIPO_EMPRESA,
         null=False

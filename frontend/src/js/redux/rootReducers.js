@@ -9,6 +9,7 @@ import notificaciones from './modules/notificaciones/notificaciones';
 import roles from './modules/roles/roles';
 import sucursal from './modules/sucursal/sucursal';
 import producto from './modules/producto/producto';
+import plantaextraccion from './modules/plantaextraccion/plantaextraccion';
 
 export default combineReducers({
     form: formReducer,
@@ -20,5 +21,6 @@ export default combineReducers({
     notificaciones,
     roles,
     sucursal,
-    producto
+    producto,
+    plantaextraccion
 });

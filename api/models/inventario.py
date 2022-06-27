@@ -12,7 +12,9 @@ class Inventario(models.Model):
     sucursal = models.ForeignKey(
         Sucursal,
         related_name="inventario",
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True
     )
     producto = models.ForeignKey(
         Producto, 

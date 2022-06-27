@@ -11,6 +11,8 @@ router.register(r'role', viewsets.RoleViewSet)
 router.register(r'user', viewsets.UserViewset)
 router.register(r'producto', viewsets.ProductoViewSet)
 router.register(r'sucursal', viewsets.SucursalViewSet)
+router.register(r'inventario', viewsets.InventarioViewSet)
+router.register(r'movimiento', viewsets.MovimientoViewSet)
 
 
 urlpatterns = [

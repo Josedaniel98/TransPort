@@ -25,7 +25,6 @@ export const ProductoForm = (props) => {
     return (
         <form onSubmit={handleSubmit} className="py-4">
             <div className="mb-3 col-12">
-                <strong className="text-muted d-block mb-2">Inputs</strong>
                 <div className="row">
                     <div className="col-md-6 col-12 mb-2">
                         <label htmlFor="normal_field">Nombre</label>
