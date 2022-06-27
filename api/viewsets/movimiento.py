@@ -12,7 +12,7 @@ from api.serializers import MovimientoSerializer, MovimientoReadSerializar, movi
 
 class MovimientoViewSet(viewsets.ModelViewSet):
     queryset = Movimiento.objects.filter(estado=True)
-    filter_fields = ( 'id', 'cliente' )
+    filter_fields = ( 'id', 'cliente','tipo_empresa' )
     # serializer_class = MovimientoSerializer
 
     def get_serializer_class(self):

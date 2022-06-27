@@ -35,7 +35,7 @@ const PEClienteForm = (props) => {
                     </div>
 
                     <div className="col-md-6 col-12 mb-2">
-                        <label htmlFor="normal_field">Tipo de Producto</label>
+                        <label htmlFor="normal_field">Cantidad</label>
                         <Field
                             name="cantidad"
                             placeholder="Número de item"
@@ -53,7 +53,7 @@ const PEClienteForm = (props) => {
                             component={AsyncSelectField}
                         />
                     </div>
-                    <div className="col-md-6 col-12 mb-2">
+                    {/* <div className="col-md-6 col-12 mb-2">
                         <label htmlFor="sucursal">Sucursal de destino</label>
                         <Field
                             name="sucursal_destino"
@@ -62,7 +62,7 @@ const PEClienteForm = (props) => {
                             loadOptions={getListSucursal}
                             component={AsyncSelectField}
                         />
-                    </div>
+                    </div> */}
                 </div>
             </div>
             <div className='row mt-2'>

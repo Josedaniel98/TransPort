@@ -1,14 +1,11 @@
 import { handleActions } from 'redux-actions';
-import { push } from "react-router-redux";
-import { NotificationManager } from "react-notifications";
-import { initialize as initializeForm } from 'redux-form';
 import { api } from "api";
 
 const SUBMIT = 'PRODUCTO_SUBMIT';
 const LOADER = 'PRODUCTO_LOADER';
 const SET_DATA = 'SET_DATA';
 const SET_PAGE = 'SET_PAGE';
-const OPEN_MODAL = 'OPEN_MODAL';
+
 
 export const constants = {
     SUBMIT,
@@ -33,47 +30,15 @@ const setPage = page => ({
     page,
 });
 
-const setModal = stateModal => ({
-    type: OPEN_MODAL,
-    stateModal,
-});
 
-// ------------------------------------
-// Actions
-// ------------------------------------
 
-export const onSubmit = (data = {}) => (dispatch, getStore) => {
-    // console.log(data)
-    const { me } = getStore().login;
-    // console.log(me.profile)
-    const newData = {
-        ...data,
-        producto: data.producto.value,
-        sucursal: me.profile.sucursal.id || null
-    }
+const getListMovimiento = (page = 1) => (dispatch, getStore) => {
 
     dispatch(setLoader(true));
-    api.post('inventario', newData).then(() => {
-        // dispatch(push("/plantaextraccion"));
-        dispatch(getListInventario());
-        dispatch(closeModal())
-        NotificationManager.success('Inventario creada con éxito', 'Éxito', 3000);
-    }).catch(() => {
-        NotificationManager.error('Hubo error en la creación', 'ERROR', 0);
-    }).finally(() => {
-        dispatch(setLoader(false));
-    });
-};
-
-const getListInventario = (page = 1) => (dispatch, getStore) => {
-
-    dispatch(setLoader(true));
-    // Los filtros de inventario se hacen con la sucursal que tiene asignado el usuario logueado
-    const { me } = getStore().login;
-    const sucursal = me.profile.sucursal ? me.profile.sucursal.id : null
     
-    const params = { page, sucursal };
-    api.get('inventario', params).then((response) => {
+    const params = { page, tipo_empresa: 10 }
+
+    api.get('movimiento', params).then((response) => {
         dispatch(setData(response));
         dispatch(setPage(page));
     }).catch(() => {
@@ -84,43 +49,12 @@ const getListInventario = (page = 1) => (dispatch, getStore) => {
 
 
 
-//================================
-//       Modal
-//================================
 
-const getListProducto = (page = 1) => (dispatch) => {
-
-    let productos = []
-
-    return api.get('producto').then((response) => {
-        response.results.forEach(producto => {
-            productos.push({ value: producto.id, label: producto.nombre })
-        })
-        return productos;
-    }).catch(() => {
-        return productos;
-    })
-};
-
-const openModal = () => (dispatch) => {
-    dispatch(setModal(true))
-}
-const closeModal = () => (dispatch) => {
-    dispatch(setModal(false))
-}
-
-//================================
-//       Finish Modal
-//================================
 
 
 
 export const actions = {
-    onSubmit,
-    getListInventario,
-    openModal,
-    closeModal,
-    getListProducto
+    getListMovimiento,
 };
 
 export const reducers = {
@@ -142,17 +76,10 @@ export const reducers = {
             page,
         };
     },
-    [OPEN_MODAL]: (state, { stateModal }) => {
-        return {
-            ...state,
-            stateModal,
-        };
-    },
 };
 
 export const initialState = {
     loader: false,
-    stateModal: false,
     page: 1,
     data: {}
 };

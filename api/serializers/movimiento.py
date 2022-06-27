@@ -13,12 +13,16 @@ class MovimientoReadSerializar(serializers.ModelSerializer):
     producto = serializers.SerializerMethodField()
     sucursal_origen = serializers.SerializerMethodField()
     sucursal_destino = serializers.SerializerMethodField()
+    precio_venta = serializers.SerializerMethodField()
     class Meta:
         model=Movimiento
-        fields=('id','producto','cantidad','sucursal_origen','sucursal_destino','total')
+        fields=('id','producto','cantidad','sucursal_origen','sucursal_destino','total','precio_venta')
     
     def get_producto(self,obj):
         return obj.producto.nombre
+    
+    def get_precio_venta(self,obj):
+        return obj.producto.precio_venta
 
     def get_sucursal_origen(self,obj):
         return obj.sucursal_origen.nombre

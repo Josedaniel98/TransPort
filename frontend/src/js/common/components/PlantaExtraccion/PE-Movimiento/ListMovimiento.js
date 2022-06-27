@@ -1,60 +1,54 @@
 import React, { Component } from 'react'
 import Grid from '../../Utils/Grid'
-import { standardActions } from "../../Utils/Grid/StandardActions"
 import currency from 'currency-formatter'
 
 export default class ListMovimiento extends Component {
+    componentWillMount = () => {
+        const { getListMovimiento,  } = this.props;
+
+        getListMovimiento();
+    }
+
     render() {
-        const { data, onSubmit, loader, page, getListInventario, getListProducto,
-            stateModal, openModal, closeModal } = this.props;
+        const { data,  loader, page, getListMovimiento } = this.props;
         return (
             <React.Fragment>
                 <br />
-                <h3 className="text">Inventario</h3>
+                <h3 className="text">Listado de Movimiento</h3>
                 <div className="mb-4 card card-small mt-4 container">
-                    <div className="mt-3 d-flex justify-content-end mb-3">
-                        <button
-                            onClick={() => { openModal() }}
-                            className="btn btn-primary mr-1"
-                        >
-                            Agregar
-                        </button>
-                    </div>
-                    <div>
+                    <div className='mt-5'>
                         <Grid
                             data={data}
                             loading={loader}
-                            onPageChange={getListInventario}
+                            onPageChange={getListMovimiento}
                             // onSortChange={onSortChange}
                             page={page}
                         >
-                            {/* <TableHeaderColumn
-                                dataField="id"
-                                dataAlign="center"
-                                dataSort
-                                dataFormat={standardActions({ editar: "producto", ver:'producto', eliminar })}
-                            >
-                                Acciones
-                            </TableHeaderColumn> */}
 
                             <TableHeaderColumn
                                 isKey
                                 dataField="producto"
                                 dataSort
                             >
-                                Nombre
+                                Producto
                             </TableHeaderColumn>
                             <TableHeaderColumn
-                                dataField="existencias"
+                                dataField="cantidad"
                                 dataSort
                             >
-                                Existencia
+                                Cantidad
+                            </TableHeaderColumn>
+                            <TableHeaderColumn
+                                dataField="sucursal_origen"
+                                dataSort
+                            >
+                                Sucursal Origen
                             </TableHeaderColumn>
                             <TableHeaderColumn
                                 dataField="precio_venta"
                                 dataSort
                             >
-                                P/U
+                                p/u
                             </TableHeaderColumn>
                             <TableHeaderColumn
                                 dataField="total"
