@@ -12,6 +12,7 @@ from api.serializers import SucursalSerializer, SucursalReadSerializer
 
 class SucursalViewSet(viewsets.ModelViewSet):
     queryset = Sucursal.objects.filter(estado=True)
+    filter_fields = ( 'id', 'tipo_empresa' )
 
     def get_serializer_class(self):
 

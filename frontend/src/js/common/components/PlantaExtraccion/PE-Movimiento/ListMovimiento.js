@@ -1,22 +1,12 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom';
-import Grid from '../Utils/Grid'
-import { standardActions } from "../Utils/Grid/StandardActions"
-import InventarioModal from './InventarioModal';
+import Grid from '../../Utils/Grid'
+import { standardActions } from "../../Utils/Grid/StandardActions"
 import currency from 'currency-formatter'
 
-export default class ListPlantaExtraccion extends Component {
-
-    componentWillMount = () => {
-        const { getListInventario, closeModal } = this.props;
-
-        closeModal();
-        getListInventario();
-    }
-
+export default class ListMovimiento extends Component {
     render() {
         const { data, onSubmit, loader, page, getListInventario, getListProducto,
-                stateModal, openModal, closeModal } = this.props;
+            stateModal, openModal, closeModal } = this.props;
         return (
             <React.Fragment>
                 <br />
@@ -70,7 +60,7 @@ export default class ListPlantaExtraccion extends Component {
                                 dataField="total"
                                 dataSort
                                 dataFormat={
-                                    (cell)=> currency.format( cell, { code: 'GTQ'} )
+                                    (cell) => currency.format(cell, { code: 'GTQ' })
                                 }
                             >
                                 Total
@@ -79,14 +69,6 @@ export default class ListPlantaExtraccion extends Component {
 
                     </div>
                 </div>
-
-                {/* Modal */}
-                <InventarioModal
-                    onSubmit={onSubmit}
-                    stateModal={stateModal}
-                    closeModal={closeModal}
-                    listProducto={getListProducto}
-                />
             </React.Fragment>
         )
     }

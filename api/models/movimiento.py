@@ -20,6 +20,9 @@ class Movimiento(models.Model):
         blank=True,
         null=True
     )
+
+    cantidad = models.IntegerField(default=0, null=False)
+
     total= models.FloatField(default=0)
     sucursal_origen = models.ForeignKey(
         Sucursal,
@@ -29,7 +32,9 @@ class Movimiento(models.Model):
     sucursal_destino = models.ForeignKey(
         Sucursal,
         related_name='movimiento_destino',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
     )
 
     cliente = models.ForeignKey(
