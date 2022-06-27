@@ -64,10 +64,10 @@ export default class ListPECliente extends Component {
                 Sucursal Origen
               </TableHeaderColumn>
               <TableHeaderColumn
-                dataField="sucursal_destino"
-                dataSort
+                  dataField="precio_venta"
+                  dataSort
               >
-                Sucursal Destino
+                  p/u
               </TableHeaderColumn>
               <TableHeaderColumn
                 dataField="total"

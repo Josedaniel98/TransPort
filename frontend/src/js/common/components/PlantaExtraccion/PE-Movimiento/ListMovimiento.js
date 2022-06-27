@@ -45,6 +45,12 @@ export default class ListMovimiento extends Component {
                                 Sucursal Origen
                             </TableHeaderColumn>
                             <TableHeaderColumn
+                                dataField="cliente"
+                                dataSort
+                            >
+                                Cliente
+                            </TableHeaderColumn>
+                            <TableHeaderColumn
                                 dataField="precio_venta"
                                 dataSort
                             >
