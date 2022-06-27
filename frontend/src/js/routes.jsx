@@ -24,6 +24,8 @@ import {listProducto,producto} from './common/components/Productos';
 import {listSucursal,sucursal} from './common/components/Sucursales';
 import{listPlantaExtraccion} from './common/components/PlantaExtraccion/'
 import {listServiciosConstruccion} from './common/components/ServiciosConstruccion';
+import{listPEMovimiento} from './common/components/PlantaExtraccion/PE-Movimiento'
+import{listPECliente, pECliente} from './common/components/PlantaExtraccion/PE-Cliente'
 
 require('../style/index.css');
 
@@ -59,6 +61,9 @@ module.exports = (
 
                 <ProtectedRoute exact path="/plantaextraccion" component={listPlantaExtraccion} />
                 <ProtectedRoute exact path="/serviciosconstruccion" component={listServiciosConstruccion} />
+                <ProtectedRoute exact path="/pe-movimiento" component={listPEMovimiento} />
+                <ProtectedRoute exact path="/pe-cliente" component={listPECliente} />
+                <ProtectedRoute exact path="/pe-cliente/create" component={pECliente} />
                 
                 <ProtectedRoute exact path="/user-profile" component={Profile} />
                 <ProtectedRoute exact path="/grids" component={Grids} />

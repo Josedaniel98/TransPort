@@ -92,7 +92,7 @@ const getListProducto = (page = 1) => (dispatch) => {
 
     let productos = []
 
-    return api.get('producto',{ tipo_producto:2}).then((response) => {
+    return api.get('producto').then((response) => {
         response.results.forEach(producto => {
             productos.push({ value: producto.id, label: producto.nombre })
         })

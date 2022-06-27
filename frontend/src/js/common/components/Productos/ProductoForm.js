@@ -15,7 +15,7 @@ import {
 
 
 export const ProductoForm = (props) => {
-    const { handleSubmit, getListSucursal, ver } = props
+    const { handleSubmit, getListSucursal, read } = props
 
     const TIPO_PRODUCTO = [
         { "value": 1, "label": 'Producto' },
@@ -32,7 +32,7 @@ export const ProductoForm = (props) => {
                             name="nombre"
                             placeholder="Nombre del item"
                             component={renderField}
-                            disable={ver}
+                            disable={read}
                         />
                     </div>
                     <div className="col-md-6 col-12 mb-2">
@@ -41,7 +41,7 @@ export const ProductoForm = (props) => {
                             name="codigo"
                             placeholder="Código del elemento"
                             component={renderField}
-                            disable={ver}
+                            disable={read}
                         />
                     </div>
                     <div className="col-md-6 col-12 mb-2">
@@ -50,7 +50,7 @@ export const ProductoForm = (props) => {
                             name="precio_venta"
                             placeholder="Precio del item"
                             component={renderCurrency}
-                            disable={ver}
+                            disable={read}
                         />
                     </div>
                     <div className="col-md-6 col-12 mb-2">
@@ -59,7 +59,7 @@ export const ProductoForm = (props) => {
                             name="tipo_producto"
                             options={TIPO_PRODUCTO}
                             component={SelectField}
-                            disable={ver}
+                            disable={read}
                         />
                     </div>
 
@@ -71,7 +71,7 @@ export const ProductoForm = (props) => {
                             placeholder="Seleccionar..."
                             loadOptions={getListSucursal}
                             component={AsyncSelectField}
-                            disable={ver}
+                            disable={read}
                         />
                     </div>
                     <div className="col-md-6 col-12 mb-2">
@@ -80,7 +80,7 @@ export const ProductoForm = (props) => {
                             name="descripcion"
                             placeholder="Observaciones"
                             component={renderTextArea}
-                            disable={ver}
+                            disable={read}
                         />
                     </div>
                 </div>
@@ -96,7 +96,7 @@ export const ProductoForm = (props) => {
                     </a>
                 </div>
                 {
-                    !ver
+                    !read
                     &&
                     (<div className="col-md-6 col-12 mb-2">
                         <button type="submit" className="btn btn-primary m-1 align-self-center">Registrar</button>

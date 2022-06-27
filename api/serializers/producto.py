@@ -10,7 +10,7 @@ class ProductoSerializer(serializers.ModelSerializer):
         fields='__all__'
 
 class ProductoReadSerializer(serializers.ModelSerializer):
-    # tipo_producto = serializers.CharField(source='get_tipo_producto_display')
+    tipo_producto = serializers.CharField(source='get_tipo_producto_display')
     sucursal = serializers.SerializerMethodField()
     class Meta:
         model=Producto

@@ -8,7 +8,6 @@ const SUBMIT = 'PRODUCTO_SUBMIT';
 const LOADER = 'PRODUCTO_LOADER';
 const SET_DATA = 'SET_DATA';
 const SET_PAGE = 'SET_PAGE';
-const OPEN_MODAL = 'OPEN_MODAL';
 
 export const constants = {
     SUBMIT,
@@ -33,31 +32,28 @@ const setPage = page => ({
     page,
 });
 
-const setModal = stateModal => ({
-    type: OPEN_MODAL,
-    stateModal,
-});
 
 // ------------------------------------
 // Actions
 // ------------------------------------
 
 export const onSubmit = (data = {}) => (dispatch, getStore) => {
-    // console.log(data)
+    
     const { me } = getStore().login;
-    // console.log(me.profile)
+    // // console.log(me.profile)
     const newData = {
         ...data,
-        producto: data.producto.value,
-        sucursal: me.profile.sucursal.id || null
+        sucursal_origen: data.sucursal_origen.value,
+        producto: data.sucursal_origen.value,
+        cliente: me.id || null,
+        tipo_empresa: 10,
+        sucursal_destino: data.sucursal_destino ? data.sucursal_destino.value : null
     }
 
     dispatch(setLoader(true));
-    api.post('inventario', newData).then(() => {
-        // dispatch(push("/plantaextraccion"));
-        dispatch(getListInventario());
-        dispatch(closeModal())
-        NotificationManager.success('Inventario creada con éxito', 'Éxito', 3000);
+    api.post('movimiento', newData).then(() => {
+        dispatch(push("/pe-cliente"));
+        NotificationManager.success('Movimiento creada con éxito', 'Éxito', 3000);
     }).catch(() => {
         NotificationManager.error('Hubo error en la creación', 'ERROR', 0);
     }).finally(() => {
@@ -65,15 +61,14 @@ export const onSubmit = (data = {}) => (dispatch, getStore) => {
     });
 };
 
-const getListInventario = (page = 1) => (dispatch, getStore) => {
+const getListMovimiento = (page = 1) => (dispatch, getStore) => {
 
     dispatch(setLoader(true));
     // Los filtros de inventario se hacen con la sucursal que tiene asignado el usuario logueado
     const { me } = getStore().login;
-    const sucursal = me.profile.sucursal ? me.profile.sucursal.id : null
     
-    const params = { page, sucursal };
-    api.get('inventario', params).then((response) => {
+    const params = { page, cliente: me.id };
+    api.get('movimiento', params).then((response) => {
         dispatch(setData(response));
         dispatch(setPage(page));
     }).catch(() => {
@@ -84,15 +79,12 @@ const getListInventario = (page = 1) => (dispatch, getStore) => {
 
 
 
-//================================
-//       Modal
-//================================
 
 const getListProducto = (page = 1) => (dispatch) => {
 
     let productos = []
 
-    return api.get('producto',{ tipo_producto:2}).then((response) => {
+    return api.get('producto',{tipo_producto:2}).then((response) => {
         response.results.forEach(producto => {
             productos.push({ value: producto.id, label: producto.nombre })
         })
@@ -102,24 +94,27 @@ const getListProducto = (page = 1) => (dispatch) => {
     })
 };
 
-const openModal = () => (dispatch) => {
-    dispatch(setModal(true))
-}
-const closeModal = () => (dispatch) => {
-    dispatch(setModal(false))
-}
+const getListSucursal = (page = 1) => (dispatch) => {
 
-//================================
-//       Finish Modal
-//================================
+    let sucursales = []
+
+    return api.get('sucursal', {tipo_empresa:10}).then((response) => {
+        response.results.forEach(sucursal => {
+            sucursales.push({ value: sucursal.id, label: sucursal.nombre })
+        })
+        return sucursales;
+    }).catch(() => {
+        return sucursales;
+    })
+};
+
 
 
 
 export const actions = {
     onSubmit,
-    getListInventario,
-    openModal,
-    closeModal,
+    getListMovimiento,
+    getListSucursal,
     getListProducto
 };
 
@@ -141,18 +136,11 @@ export const reducers = {
             ...state,
             page,
         };
-    },
-    [OPEN_MODAL]: (state, { stateModal }) => {
-        return {
-            ...state,
-            stateModal,
-        };
-    },
+    }
 };
 
 export const initialState = {
     loader: false,
-    stateModal: false,
     page: 1,
     data: {}
 };
