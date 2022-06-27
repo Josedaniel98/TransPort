@@ -10,6 +10,7 @@ import roles from './modules/roles/roles';
 import sucursal from './modules/sucursal/sucursal';
 import producto from './modules/producto/producto';
 import plantaextraccion from './modules/plantaextraccion/plantaextraccion';
+import serviciosconstruccion from './modules/serviciosconstruccion/serviciosconstruccion';
 
 export default combineReducers({
     form: formReducer,
@@ -22,5 +23,6 @@ export default combineReducers({
     roles,
     sucursal,
     producto,
-    plantaextraccion
+    plantaextraccion,
+    serviciosconstruccion
 });

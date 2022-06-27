@@ -1,13 +1,5 @@
 import React, { Component } from 'react';
 import { Link, NavLink } from "react-router-dom";
-import {
-    Accordion,
-    AccordionItem,
-    AccordionItemState,
-    AccordionItemHeading,
-    AccordionItemButton,
-    AccordionItemPanel,
-} from 'react-accessible-accordion';
 
 class SideBar extends Component {
     constructor(props) {
