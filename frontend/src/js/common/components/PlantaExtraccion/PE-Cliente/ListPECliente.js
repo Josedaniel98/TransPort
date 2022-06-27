@@ -17,14 +17,14 @@ export default class ListPECliente extends Component {
     return (
       <React.Fragment>
         <br />
-        <h3 className="text">Inventario</h3>
+        <h3 className="text">Movimiento</h3>
         <div className="mb-4 card card-small mt-4 container">
           <div className="mt-3 d-flex justify-content-end mb-3">
             <Link
               className="btn btn-primary"
               to="/pe-cliente/create"
             >
-              Agregar
+              Pedir
             </Link>
           </div>
           <div>
